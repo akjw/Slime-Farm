@@ -1,0 +1,47 @@
+* , *::before, *::after{
+    box-sizing: border-box;
+  }
+  
+
+:root {
+    --cell-size: 100px;
+    --mark-size: calc(var(--cell-size) * .9);
+}
+
+body {
+    margin: 0;
+    font-family: 'Shadows Into Light', cursive, sans-serif;
+  }
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(6, auto);
+    grid-template-rows: repeat(6, auto);
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    justify-items: center;
+    height: 100vh;
+    width: 100vw;
+  }
+
+.cell {
+    border: 1px solid black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    height: var(--cell-size);
+    width: var(--cell-size);
+    position: relative;
+  }
+
+.cell.mole {
+      background-image: url('images/mole.png');
+      background-size: cover;
+  }
+
+.scoreboard {
+  text-align: center;
+  font-size: 5rem;
+}
