@@ -10,8 +10,14 @@
 
 body {
     margin: 0;
+    padding: 0;
     font-family: 'Shadows Into Light', cursive, sans-serif;
   }
+
+h1 {
+  text-align: center;
+  font-size: 4rem;
+}
 
 .grid {
     display: grid;
@@ -33,15 +39,22 @@ body {
     cursor: pointer;
     height: var(--cell-size);
     width: var(--cell-size);
-    position: relative;
   }
 
 .cell.mole {
-      background-image: url('images/mole.png');
-      background-size: cover;
+    background-image: url('images/mole.png');
+    background-size: cover;
   }
 
-.scoreboard {
-  text-align: center;
-  font-size: 5rem;
+.cell.noHit {
+    background-image: url('images/mole3.png');
+    background-clip: cover;
+}
+
+.top-bar, .start{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  font-size: 3rem;
 }
