@@ -16,13 +16,11 @@ body {
 
 h1 {
   text-align: center;
-  font-size: 4rem;
+  font-size: 3rem;
 }
 
 .grid {
     display: grid;
-    grid-template-columns: repeat(6, auto);
-    grid-template-rows: repeat(6, auto);
     justify-content: center;
     align-items: center;
     align-content: center;
@@ -30,6 +28,21 @@ h1 {
     height: 100vh;
     width: 100vw;
   }
+
+.easy {
+    grid-template-columns: repeat(6, auto);
+    grid-template-rows: repeat(6, auto);
+}
+
+.normal {
+    grid-template-columns: repeat(7, auto);
+    grid-template-rows: repeat(7, auto);
+}
+
+.expert {
+  grid-template-columns: repeat(8, auto);
+  grid-template-rows: repeat(8, auto);
+}
 
 .cell {
     border: 1px solid black;
@@ -51,10 +64,15 @@ h1 {
     background-clip: cover;
 }
 
+.cell.angry {
+  background-image: url('images/mole-dead5.png');
+  background-clip: cover;
+}
+
 .top-bar, .start{
   display: flex;
   flex-direction: row;
   justify-content: space-around;
   align-items: center;
-  font-size: 3rem;
+  font-size: 2rem;
 }

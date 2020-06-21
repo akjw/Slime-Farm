@@ -5,8 +5,9 @@ Furthers
 1) Add countdown using setInterval & clearInterval
 2) Add distractor 
     a) add lives
-3) Draw board for each level (3x3, 6x6, 9x9)
-4) Add high score tracker
+3) Draw board for each level (5x5, 6x6, 7x7)
+4) Add turn-based element
+    a) 3rd animal; if score <= x at 10s, enemy will attack, with 0.8 chance of landing hit. otherwise, 0.5 chance of landing hit
 5) animate sprites
 
 CSS Upgrades

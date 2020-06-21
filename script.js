@@ -1,4 +1,5 @@
-var cells = document.querySelectorAll('.cell');
+var grid = document.querySelector('.grid');
+var cells;
 var moles = document.querySelectorAll('.mole')
 var scoreDisplay = document.querySelector('#scoreNum');
 var secondsLeft = document.querySelector('#secondsLeft');
@@ -10,6 +11,33 @@ var timesUp = true;
 var score = 0;
 var lives = 5;
 var timeLeft = 15;
+var choices = [36, 49, 64]
+//remove once select options are added
+var userChoice = choices[0];
+
+drawBoard(userChoice);
+
+function drawBoard (choice){
+    for(var i = 0; i < choice; i++){
+        if (choice === choices[0]){
+            grid.classList.add('easy');
+        } 
+        else if (choice === choices[1]){
+            grid.classList.add('normal');
+        }
+        else if (choice === choices[2]){
+            grid.classList.add('expert');
+        }
+        var newCell = document.createElement('div');
+        //console.log('added cell');
+        newCell.classList.add('cell');
+        //console.log('added class of cell')
+        grid.appendChild(newCell);
+        //console.log('appended cell');
+        cells = document.querySelectorAll('.cell');
+        //console.log(cells.length);
+    }
+}
 
 function newGame () {
     //start countdown
@@ -26,6 +54,7 @@ function newGame () {
     timesUp = false;
     molePop();
     distractPop();
+    angryMole();
 }
 
 function countDown (){
@@ -33,6 +62,7 @@ function countDown (){
          if (timeLeft <= 0 || lives < 1){
              clearInterval(interval);
              timesUp = true;
+             alert('Game over for countdown!');  
          }
          secondsLeft.innerHTML = timeLeft;
          timeLeft--;
@@ -62,8 +92,13 @@ function molePop (){
     var time = randomInterval(200, 1000);
     var position = randomCell(cells);
     //apply mole class & eventlistener to cell from randomCell
-    position.classList.add('mole');
-    position.addEventListener('mousedown', hitEm);
+    if (position.classList.contains('mole') || position.classList.contains('angry')) {
+        return;
+    } 
+    else {
+        position.classList.add('mole');
+        position.addEventListener('mousedown', hitEm);
+    }
     //remove mole & eventlistener after interval; continue making moles if time remains
     setTimeout (function(){
         position.classList.remove('mole');
@@ -94,18 +129,76 @@ function distractPop (){
     }, altTime) 
 }
 
+//Make angry mole appear
+function angryMole(){
+   var angry = setInterval (function(){
+        var altPosition = randomCell(cells);
+        if (altPosition.classList.contains('mole') || altPosition.classList.contains('noHit')){
+            return;
+        }
+        else {
+            altPosition.classList.add('angry');
+            console.log('added angry mole!');
+            if (timeLeft <= 0 || lives <= 0){
+                clearInterval(angry);
+                console.log('cleared interval');
+                alert('Game over for angrymole!');  
+            }
+            else if (timeLeft >= 10 && lives > 0){
+                console.log('more than 10s left');
+                moleAttack(30, 0.8);
+            } 
+            else if (timeLeft >= 5 && lives > 0){
+                console.log('more than 5s left');
+                moleAttack(90, 0.8);
+            }
+            else if (timeLeft > 0 && lives > 0){
+                console.log('more than 0s left')
+                moleAttack(120, 0.8);
+            }
+        }
+        setTimeout(function(){
+            altPosition.classList.remove('angry');
+        }, 800)
+    }, 5000) 
+}
+
+//Calculate chances of mole successfully attacking 
+function moleAttack (minScore, chance){
+    if (score < minScore){
+        if(Math.random() < chance){
+            lives -= 2;
+            numLives.innerHTML = lives;
+            console.log('less than minScore; hit!');
+        }
+        else {
+            console.log('attack missed!');
+        }
+    } 
+    else {
+        if(Math.random() < 0.5){
+            lives -= 1;
+            numLives.innerHTML = lives;
+            console.log('more than minScore; hit!');
+        }
+        else{
+            console.log('attack missed!');
+        }
+    }
+}
+
 function hitEm (event){
     if (this.classList.contains('mole')){
         score += 10;
         scoreDisplay.innerHTML = score;
         this.classList.remove('mole');
     } else {
-        console.log('penalty!')
+        console.log('penalty!');
         lives -= 1;
         if (lives < 1){
             timesUp = true;
             numLives.innerHTML = 0;
-            alert('Game over!');
+            alert('Game over for hitem!');
         }
         numLives.innerHTML = lives;
         this.classList.remove('noHit');
