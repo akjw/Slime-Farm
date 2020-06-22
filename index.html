@@ -7,6 +7,16 @@
     <title>Whack-a-mole</title>
 </head>
 <body>
+    <div class="start-state show" id="startState">
+        <div class="start-message">Welcome to the Digglett Farming Sim!</div>
+        <select id="difficultyLevel">
+            <option disabled hidden selected>Difficulty</option>
+            <option value="0">Easy</option>
+            <option value="1">Normal</option>
+            <option value="2">Expert</option>
+          </select>
+          <button id="start">Start</button>
+    </div>
     <div class="game-display">
         <h1>Digglett Farm Sim</h1>
         <div class="top-bar">
@@ -15,7 +25,11 @@
             <div class="scoreboard">Score: <span id="scoreNum"></span></div>
             <div class="health">Lives: <span id="numLives">5</span></div>
         </div>   
-        <div class="grid"></div> 
+        <div id="grid"></div> 
+    </div>
+    <div class="end-state" id="endState">
+        <div class="outcome-message"></div>
+        <button id="restart">Restart</button>
     </div>
     <script src="script.js"></script>
 </body>

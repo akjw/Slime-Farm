@@ -19,7 +19,45 @@ h1 {
   font-size: 3rem;
 }
 
-.grid {
+.end-state, .start-state {
+  display: none;
+  position: fixed;
+  background-color: rgba(93, 163, 163, 0.7);
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  font-size: 5rem;
+  flex-direction: column;
+}
+
+.end-state.show , .start-state.show{
+  display: flex;
+}
+
+.start-state button {
+  cursor: pointer;
+}
+.start-state button, .start-state select, .end-state button {
+  font-size: 3rem;
+  background-color: white;
+  border: 1px solid black;
+  padding: .25em .5em;
+  margin: 35px;
+}
+
+.game-display {
+  display: none;
+}
+
+.game-display.show {
+  display: initial;
+}
+
+#grid {
     display: grid;
     justify-content: center;
     align-items: center;

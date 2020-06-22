@@ -1,4 +1,18 @@
-var grid = document.querySelector('.grid');
+/*----------Starting Display----------*/
+var startDisplay = document.querySelector('.start-state');
+var selection = document.querySelector('#difficultyLevel');
+var startButton = document.querySelector('#start');
+startButton.addEventListener('click', drawBoard);
+
+/*----------Ending Display----------*/
+var endDisplay = document.querySelector('.end-state');
+var endMessage = document.querySelector('.outcome-message');
+var restartButton = document.querySelector('#restart');
+restartButton.addEventListener('click', restartGame);
+
+/*----------Game Display----------*/
+var gameDisplay = document.querySelector('.game-display');
+var grid = document.querySelector('#grid');
 var cells;
 var moles = document.querySelectorAll('.mole')
 var scoreDisplay = document.querySelector('#scoreNum');
@@ -6,28 +20,36 @@ var secondsLeft = document.querySelector('#secondsLeft');
 var numLives = document.querySelector('#numLives');
 var start = document.querySelector('.start');
 start.addEventListener('click', newGame);
+
+
+/*----------Game Variables----------*/
 var lastSelectedCell;
 var timesUp = true;
 var score = 0;
 var lives = 5;
 var timeLeft = 15;
-var choices = [36, 49, 64]
-//remove once select options are added
-var userChoice = choices[0];
+var numberOfCells = [36, 49, 64]
+var setCells;
 
-drawBoard(userChoice);
-
-function drawBoard (choice){
-    for(var i = 0; i < choice; i++){
-        if (choice === choices[0]){
-            grid.classList.add('easy');
-        } 
-        else if (choice === choices[1]){
-            grid.classList.add('normal');
-        }
-        else if (choice === choices[2]){
-            grid.classList.add('expert');
-        }
+function drawBoard (){
+    //Get difficulty level
+    choice = selection.options[selection.selectedIndex].text
+    //Remove start display; show game display
+    startDisplay.classList.remove('show');
+    gameDisplay.classList.add('show');
+    if (choice === 'Easy'){
+        grid.classList.add('easy');
+        setCells = numberOfCells[0];
+    } 
+    else if (choice === 'Normal'){
+        grid.classList.add('normal');
+        setCells = numberOfCells[1];
+    }
+    else if (choice === 'Expert'){
+        grid.classList.add('expert');
+        setCells = numberOfCells[2];
+    }
+    for (var i = 0; i < setCells; i++){
         var newCell = document.createElement('div');
         //console.log('added cell');
         newCell.classList.add('cell');
@@ -37,19 +59,14 @@ function drawBoard (choice){
         cells = document.querySelectorAll('.cell');
         //console.log(cells.length);
     }
+    newGame();
 }
 
 function newGame () {
     //start countdown
     countDown();
     //reset state
-    cells.forEach(cell => {
-        //remove mole class
-        cell.classList.remove('mole');
-        //remove eventListeners
-        cell.removeEventListener('mouseup', hitEm);
-    });
-    scoreDisplay.textContent = '';
+    scoreDisplay.textContent = score;
     //run 
     timesUp = false;
     molePop();
@@ -57,12 +74,16 @@ function newGame () {
     angryMole();
 }
 
+
+
+/*----------Helper Functions----------*/
 function countDown (){
     var interval = setInterval (function () {
          if (timeLeft <= 0 || lives < 1){
-             clearInterval(interval);
-             timesUp = true;
-             alert('Game over for countdown!');  
+            clearInterval(interval);
+            timesUp = true;
+            endGame();
+            //  alert('Game over for countdown!');  
          }
          secondsLeft.innerHTML = timeLeft;
          timeLeft--;
@@ -111,7 +132,7 @@ function molePop (){
 
 //Make distractor animal appear
 function distractPop (){
-    var altTime = randomInterval(900, 1000);
+    var altTime = randomInterval(200, 1000);
     var altPosition = randomCell(cells);
     //Terminate function if cell already has mole class
     if (altPosition.classList.contains('mole')) {
@@ -141,8 +162,8 @@ function angryMole(){
             console.log('added angry mole!');
             if (timeLeft <= 0 || lives <= 0){
                 clearInterval(angry);
-                console.log('cleared interval');
-                alert('Game over for angrymole!');  
+                endGame();
+                // alert('Game over for angrymole!');  
             }
             else if (timeLeft >= 10 && lives > 0){
                 console.log('more than 10s left');
@@ -150,11 +171,11 @@ function angryMole(){
             } 
             else if (timeLeft >= 5 && lives > 0){
                 console.log('more than 5s left');
-                moleAttack(90, 0.8);
+                moleAttack(40, 0.8);
             }
             else if (timeLeft > 0 && lives > 0){
                 console.log('more than 0s left')
-                moleAttack(120, 0.8);
+                moleAttack(50, 0.8);
             }
         }
         setTimeout(function(){
@@ -172,7 +193,7 @@ function moleAttack (minScore, chance){
             console.log('less than minScore; hit!');
         }
         else {
-            console.log('attack missed!');
+            console.log('less than minScore; attack missed!');
         }
     } 
     else {
@@ -182,11 +203,12 @@ function moleAttack (minScore, chance){
             console.log('more than minScore; hit!');
         }
         else{
-            console.log('attack missed!');
+            console.log('more than minScore; attack missed!');
         }
     }
 }
 
+//Clicking moles adds to score or deducts a life
 function hitEm (event){
     if (this.classList.contains('mole')){
         score += 10;
@@ -198,10 +220,30 @@ function hitEm (event){
         if (lives < 1){
             timesUp = true;
             numLives.innerHTML = 0;
-            alert('Game over for hitem!');
+            endGame();
+            //alert('Game over for hitem!');
         }
         numLives.innerHTML = lives;
         this.classList.remove('noHit');
     }
     this.removeEventListener('mousedown', hitEm);
+}
+
+function endGame (){
+    gameDisplay.classList.remove('show');
+    endDisplay.classList.add('show');
+    endMessage.innerText = `Thank you for playing! \n Score: ${score} \n Lives: ${lives <= 0 ? 0 : lives}`;
+}
+
+function restartGame (){
+    endDisplay.classList.remove('show');
+    startDisplay.classList.add('show');
+    while (grid.firstChild) {
+        grid.removeChild(grid.firstChild)
+      }
+    grid.removeAttribute('class');
+    score = 0;
+    lives = 5;
+    numLives.innerHTML = lives;
+    timeLeft = 15;
 }
