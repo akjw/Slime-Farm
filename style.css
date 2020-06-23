@@ -1,22 +1,41 @@
 * , *::before, *::after{
-    box-sizing: border-box;
-  }
+  box-sizing: border-box;
+}
   
 
 :root {
-    --cell-size: 100px;
-    --mark-size: calc(var(--cell-size) * .9);
+  --cell-size: 150px;
+  --mark-size: calc(var(--cell-size) * .9);
 }
 
 body {
-    margin: 0;
-    padding: 0;
-    font-family: 'Shadows Into Light', cursive, sans-serif;
-  }
+  margin: 0;
+  padding: 0;
+  text-shadow: 5px 5px 5px #535353;
+  font-family: 'Press Start 2P', cursive, sans-serif;
+  color: white;
+  background-image: url('images/PixelArt.png');
+  background-size: cover;
+  overflow: hidden;
+}
+
+.header {
+  padding: 10px;
+  width: 80%;
+  text-align: center;
+  text-shadow: 5px 5px 5px #535353;
+  border: 2px solid black;
+  border-radius: 10px;
+  margin-top: 10px;
+  margin-left: auto;
+  margin-right: auto;
+  background: rgba(126, 126, 126, 0.3);
+  box-shadow: 4px 4px 4px rgba(177, 175, 175, 0.5);
+}
 
 h1 {
   text-align: center;
-  font-size: 3rem;
+  font-size: 2rem;
 }
 
 .end-state, .start-state {
@@ -34,6 +53,20 @@ h1 {
   flex-direction: column;
 }
 
+.start-message, .outcome-message, #start, #restart {
+  font-size: 3rem;
+}
+
+#difficultyLevel {
+  margin: 100px;
+  border-radius: 10px;
+}
+
+#start, #restart {
+  cursor: pointer;
+  margin: 100px;
+}
+
 .end-state.show , .start-state.show{
   display: flex;
 }
@@ -41,6 +74,7 @@ h1 {
 .start-state button {
   cursor: pointer;
 }
+
 .start-state button, .start-state select, .end-state button {
   font-size: 3rem;
   background-color: white;
@@ -58,53 +92,82 @@ h1 {
 }
 
 #grid {
-    display: grid;
-    justify-content: center;
-    align-items: center;
-    align-content: center;
-    justify-items: center;
-    height: 100vh;
-    width: 100vw;
-  }
+  display: grid;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+  justify-items: center;
+  height: 100%;
+  width: 100%;
+}
 
 .easy {
-    grid-template-columns: repeat(6, auto);
-    grid-template-rows: repeat(6, auto);
+  grid-template-columns: repeat(4, auto);
+  grid-template-rows: repeat(4, auto);
 }
 
 .normal {
-    grid-template-columns: repeat(7, auto);
-    grid-template-rows: repeat(7, auto);
+  grid-template-columns: repeat(5, auto);
+  grid-template-rows: repeat(5, auto);
 }
 
 .expert {
-  grid-template-columns: repeat(8, auto);
-  grid-template-rows: repeat(8, auto);
+  grid-template-columns: repeat(6, auto);
+  grid-template-rows: repeat(6, auto);
 }
 
 .cell {
-    border: 1px solid black;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    cursor: pointer;
-    height: var(--cell-size);
-    width: var(--cell-size);
-  }
+  /*border: 1px solid black; */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  height: var(--cell-size);
+  width: var(--cell-size);
+}
+
 
 .cell.mole {
-    background-image: url('images/mole.png');
-    background-size: cover;
+  background: url(images/Yellow\ Slime.png);
+  width: 150px;
+  height: 150px;
+  animation: jump 0.5s steps(6) infinite;
+}
+
+
+/*
+.cell.mole {
+  background: url(images/Yellow\ Slime\ Full.png);
+  width: 160px;
+  height: 160px;
+  animation: full-jump 0.8s steps(24) infinite;
+}
+
+@keyframes full-jump {
+  100% {
+      background-position: -3840px, 0;
   }
+}
+*/
 
 .cell.noHit {
-    background-image: url('images/mole3.png');
-    background-clip: cover;
+  background: url(images/Sad\ Slime.png);
+  width: 150px;
+  height: 150px;
+  animation: jump 0.5s steps(6) infinite;
 }
 
 .cell.angry {
-  background-image: url('images/mole-dead5.png');
-  background-clip: cover;
+  background: url(images/Angry\ Slime.png);
+  width: 150px;
+  height: 150px;
+  animation: jump 0.5s steps(6) infinite;
+}
+
+@keyframes jump {
+  100% {
+      background-position: -960px, 0;
+  }
 }
 
 .top-bar, .start{
@@ -114,3 +177,4 @@ h1 {
   align-items: center;
   font-size: 2rem;
 }
+

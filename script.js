@@ -18,8 +18,7 @@ var moles = document.querySelectorAll('.mole')
 var scoreDisplay = document.querySelector('#scoreNum');
 var secondsLeft = document.querySelector('#secondsLeft');
 var numLives = document.querySelector('#numLives');
-var start = document.querySelector('.start');
-start.addEventListener('click', newGame);
+
 
 
 /*----------Game Variables----------*/
@@ -28,8 +27,9 @@ var timesUp = true;
 var score = 0;
 var lives = 5;
 var timeLeft = 15;
-var numberOfCells = [36, 49, 64]
+var numberOfCells = [16, 25, 36]
 var setCells;
+
 
 function drawBoard (){
     //Get difficulty level
@@ -77,6 +77,7 @@ function newGame () {
 
 
 /*----------Helper Functions----------*/
+
 function countDown (){
     var interval = setInterval (function () {
          if (timeLeft <= 0 || lives < 1){
@@ -110,16 +111,10 @@ function randomInterval (min, max) {
 
 //Make moles appear
 function molePop (){
-    var time = randomInterval(200, 1000);
+    var time = randomInterval(500, 1100);
     var position = randomCell(cells);
-    //apply mole class & eventlistener to cell from randomCell
-    if (position.classList.contains('mole') || position.classList.contains('angry')) {
-        return;
-    } 
-    else {
-        position.classList.add('mole');
-        position.addEventListener('mousedown', hitEm);
-    }
+    position.classList.add('mole');
+    position.addEventListener('mousedown', hitEm);
     //remove mole & eventlistener after interval; continue making moles if time remains
     setTimeout (function(){
         position.classList.remove('mole');
@@ -132,15 +127,10 @@ function molePop (){
 
 //Make distractor animal appear
 function distractPop (){
-    var altTime = randomInterval(200, 1000);
+    var altTime = randomInterval(500, 1100);
     var altPosition = randomCell(cells);
-    //Terminate function if cell already has mole class
-    if (altPosition.classList.contains('mole')) {
-        return;
-    } else  {
-        altPosition.classList.add('noHit');
-        altPosition.addEventListener('mousedown', hitEm);
-    }
+    altPosition.classList.add('noHit');
+    altPosition.addEventListener('mousedown', hitEm);
     setTimeout (function(){
         altPosition.classList.remove('noHit');
         altPosition.removeEventListener('mousedown', hitEm)
@@ -232,7 +222,7 @@ function hitEm (event){
 function endGame (){
     gameDisplay.classList.remove('show');
     endDisplay.classList.add('show');
-    endMessage.innerText = `Thank you for playing! \n Score: ${score} \n Lives: ${lives <= 0 ? 0 : lives}`;
+    endMessage.innerText = `Thank you for playing! \n\n Score: ${score} \n\n Lives: ${lives <= 0 ? 0 : lives}`;
 }
 
 function restartGame (){
@@ -247,3 +237,10 @@ function restartGame (){
     numLives.innerHTML = lives;
     timeLeft = 15;
 }
+
+function autoResizeDiv(){
+    document.getElementsByClassName('game-display').style.height = window.innerHeight +'px';
+}
+
+window.onresize = autoResizeDiv;
+autoResizeDiv();
