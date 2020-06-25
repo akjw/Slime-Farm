@@ -1,6 +1,11 @@
 /*----------Starting Display----------*/
 var startDisplay = document.querySelector('.start-state');
-var selection = document.querySelector('#difficultyLevel');
+var instructuons = document.querySelector('#instructions');
+instructions.addEventListener('click', showInstructions);
+var instructionDisplay = document.querySelector('.instruction-display');
+var backButton = document.querySelector('#back');
+backButton.addEventListener('click', backToMenu);
+var selection = document.getElementsByName('difficultyLevel')
 var startButton = document.querySelector('#start');
 startButton.addEventListener('click', drawBoard);
 
@@ -31,35 +36,50 @@ var numberOfCells = [16, 25, 36]
 var setCells;
 
 
-function drawBoard (){
-    //Get difficulty level
-    choice = selection.options[selection.selectedIndex].text
-    //Remove start display; show game display
+function showInstructions (){
     startDisplay.classList.remove('show');
-    gameDisplay.classList.add('show');
-    if (choice === 'Easy'){
-        grid.classList.add('easy');
-        setCells = numberOfCells[0];
-    } 
-    else if (choice === 'Normal'){
-        grid.classList.add('normal');
-        setCells = numberOfCells[1];
+    instructionDisplay.classList.add('show');
+}
+
+function backToMenu (){
+    instructionDisplay.classList.remove('show');
+    startDisplay.classList.add('show');
+}
+
+function drawBoard (){
+    //Verify that radio button is checked
+    if(document.querySelector('input[name="difficultyLevel"]:checked') == null) {
+        alert("Please select difficulty level!");
     }
-    else if (choice === 'Expert'){
-        grid.classList.add('expert');
-        setCells = numberOfCells[2];
+    else {
+        //Remove start display; show game display
+        startDisplay.classList.remove('show');
+        gameDisplay.classList.add('show');
+        //Draw grid according to difficulty level chosen
+        if (selection[0].checked){
+                grid.classList.add('easy');
+                setCells = numberOfCells[0];
+            }
+        else if (selection[1].checked){
+            grid.classList.add('normal');
+            setCells = numberOfCells[1];
+        }
+        else if (selection[2].checked){
+            grid.classList.add('expert');
+            setCells = numberOfCells[2];
+        }
+        for (var i = 0; i < setCells; i++){
+            var newCell = document.createElement('div');
+            //console.log('added cell');
+            newCell.classList.add('cell');
+            //console.log('added class of cell')
+            grid.appendChild(newCell);
+            //console.log('appended cell');
+            cells = document.querySelectorAll('.cell');
+            //console.log(cells.length);
+        }
+        newGame();
     }
-    for (var i = 0; i < setCells; i++){
-        var newCell = document.createElement('div');
-        //console.log('added cell');
-        newCell.classList.add('cell');
-        //console.log('added class of cell')
-        grid.appendChild(newCell);
-        //console.log('appended cell');
-        cells = document.querySelectorAll('.cell');
-        //console.log(cells.length);
-    }
-    newGame();
 }
 
 function newGame () {

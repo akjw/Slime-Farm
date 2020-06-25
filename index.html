@@ -9,14 +9,30 @@
 </head>
 <body>
     <div class="start-state show" id="startState">
-        <div class="start-message">Welcome to the Slime Farming Sim!</div>
-        <select id="difficultyLevel">
-            <option disabled hidden selected>Difficulty</option>
-            <option value="0">Easy</option>
-            <option value="1">Normal</option>
-            <option value="2">Expert</option>
-          </select>
-          <div id="start">Start</div>
+        <div class="start-message">Slime Farming Simulator</div>
+        <div id="instructions">Instructions</div>
+        <div class="level-select">
+            <span>Select difficulty:</span>
+            <ul>
+                <li>
+                    <input type='radio' value='1' name='difficultyLevel' id='easy'/>
+                    <label for='easy'>Easy</label>
+                </li>
+                <li>
+                    <input type='radio' value='2' name='difficultyLevel' id='normal'/>
+                    <label for='normal'>Normal</label>
+                </li>
+                <li>
+                    <input type='radio' value='3' name='difficultyLevel' id='expert'/>
+                    <label for='expert'>Expert</label>
+                </li>
+            </ul>
+        </div>
+        <div id="start">Start</div>
+    </div>
+    <div class="instruction-display">
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Itaque, nemo! Modi assumenda distinctio, unde quis nobis illum quaerat? Eaque repellendus temporibus atque voluptatibus maxime, soluta provident eveniet in accusamus earum.</p>
+        <div id="back">Back</div>
     </div>
     <div class="game-display">
         <div class="header">
