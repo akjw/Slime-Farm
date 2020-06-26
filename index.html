@@ -31,7 +31,16 @@
         <div id="start">Start</div>
     </div>
     <div class="instruction-display">
-        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Itaque, nemo! Modi assumenda distinctio, unde quis nobis illum quaerat? Eaque repellendus temporibus atque voluptatibus maxime, soluta provident eveniet in accusamus earum.</p>
+        <p>Your slimes have escaped the farm! Round them up to bring them home.</p>
+        <p>Each round lasts 60 seconds. The game is over when time is up, or HP hits 0.</p>
+        <img src="images/Yellow Slime Thumbnail.png">
+        <p>Boink the yellow slimes (Score +10)</p>
+        <img src="images/Sad Slime Thumbnail.png">
+        <p>Sad slimes are sensitive, and will die if boinked! Hurting them breaks your heart (HP -1)</p>
+        <img src="images/Angry Slime Thumbnail.png">
+        <p>Wild slimes attack when they appear (HP -1) Luckily, having a high score lowers their chances of landing a hit</p>
+        <img src="images/Gem Thumbnail.png">
+        <p>Collecting 3 gems gives you a chance to boink a wild slime, which nets you a higher score (Score +20)</p>
         <div id="back">Back</div>
     </div>
     <div class="game-display">
@@ -39,6 +48,7 @@
             <h1>Slime Farming Sim</h1>
             <div class="top-bar">
                 <p class="countdown">Time Left: <span id="secondsLeft">15</span></p>
+                <p class="gemboard">Gems: <span id="gemNum"></span></p>
                 <p class="scoreboard">Score: <span id="scoreNum"></span></p>
                 <p class="health">Lives: <span id="numLives">5</span></p>
             </div>  

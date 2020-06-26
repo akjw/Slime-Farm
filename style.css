@@ -1,3 +1,5 @@
+/*---General styles---*/
+
 * , *::before, *::after{
   box-sizing: border-box;
 }
@@ -5,7 +7,6 @@
 
 :root {
   --cell-size: 150px;
-  --mark-size: calc(var(--cell-size) * .9);
 }
 
 body {
@@ -19,48 +20,7 @@ body {
   overflow: hidden;
 }
 
-ul {
-  list-style: none;
-}
-
-li {
-  display: inline-block;
-  /* margin-right: 15px; 
-  margin-left: 15px; */
-  font-size: 2rem;
-  text-align: center;
-}
-
-input {
-  visibility:hidden;
-}
-
-label, #instructions {
-  cursor: pointer;
-}
-
-input:checked + label {
-  color: rgba(255, 255, 255, 0.7);
-}
-
-.header {
-  padding: 10px;
-  width: 80%;
-  text-align: center;
-  text-shadow: 5px 5px 5px #535353;
-  border: 2px solid black;
-  border-radius: 10px;
-  margin-top: 10px;
-  margin-left: auto;
-  margin-right: auto;
-  background: rgba(126, 126, 126, 0.3);
-  box-shadow: 4px 4px 4px rgba(177, 175, 175, 0.5);
-}
-
-h1, #instructions, .level-select {
-  text-align: center;
-  font-size: 2rem;
-}
+/*---Starting display, Instructions, Ending display---*/
 
 .end-state, .start-state, .instruction-display {
   display: none;
@@ -77,8 +37,9 @@ h1, #instructions, .level-select {
   flex-direction: column;
 }
 
-.start-message, .outcome-message, .level-select, #back, #start, #restart {
+.start-message, .outcome-message, #instructions, .level-select, #back, #start, #restart {
   font-size: 2rem;
+  text-align: center;
 }
 
 .start-message {
@@ -93,29 +54,49 @@ span {
   margin: 100px;
 }
 
+ul {
+  list-style: none;
+}
+
+li {
+  display: inline-block;
+  margin-right: 20px; 
+  /* margin-left: 15px; */
+  font-size: 2rem;
+  text-align: center;
+}
+
+input {
+  visibility:hidden;
+}
+
+label, #instructions {
+  cursor: pointer;
+}
+
+input:checked + label {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+#start,  #restart {
+  cursor: pointer;
+  margin: 100px;
+}
+
 .instruction-display p {
   font-size: 16px;
 }
-#start, #back, #restart {
+
+#back {
   cursor: pointer;
-  margin: 100px;
+  margin: 30px;
 }
 
 .end-state.show , .start-state.show, .instruction-display.show{
   display: flex;
 }
 
-.start-state button {
-  cursor: pointer;
-}
-
-.start-state button, .start-state select, .end-state button {
-  font-size: 3rem;
-  background-color: white;
-  border: 1px solid black;
-  padding: .25em .5em;
-  margin: 35px;
-}
+/*---Game display---*/
 
 .game-display {
   display: none;
@@ -124,6 +105,34 @@ span {
 .game-display.show {
   display: initial;
 }
+
+.header {
+  padding: 10px;
+  width: 80%;
+  text-align: center;
+  text-shadow: 5px 5px 5px #535353;
+  border: 2px solid black;
+  border-radius: 10px;
+  margin-top: 10px;
+  margin-left: auto;
+  margin-right: auto;
+  background: rgba(126, 126, 126, 0.3);
+  box-shadow: 4px 4px 4px rgba(177, 175, 175, 0.5);
+}
+
+h1 {
+  text-align: center;
+  font-size: 2rem;
+}
+
+.top-bar {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  font-size: 2rem;
+}
+
 
 #grid {
   display: grid;
@@ -160,27 +169,32 @@ span {
   width: var(--cell-size);
 }
 
-
 .cell.mole {
   background: url(images/Yellow\ Slime\ Full\ .png);
   width: 150px;
   height: 150px;
-  animation: full-jump 0.8s steps(21) infinite;
+  animation: full-jump 0.9s steps(21) infinite;
 }
 
 .cell.noHit {
   background: url(images/Sad\ Slime\ Full.png);
   width: 150px;
   height: 150px;
-  animation: full-jump 0.8s steps(21) infinite;
+  animation: full-jump 0.9s steps(21) infinite;
 }
-
 
 .cell.angry {
   background: url(images/Angry\ Slime\ Full.png);
   width: 150px;
   height: 150px;
-  animation: full-jump 0.8s steps(21) infinite;
+  animation: full-jump 0.9s steps(21) infinite;
+}
+
+.cell.gem {
+  background: url(images/Gem.png);
+  width: 150px;
+  height: 150px;
+  animation: spawn-gem 0.9s steps(19) infinite;
 }
 
 @keyframes full-jump {
@@ -189,38 +203,10 @@ span {
   }
 }
 
-
-/* .cell.mole {
-  background: url(images/Yellow\ Slime.png);
-  width: 150px;
-  height: 150px;
-  animation: jump 0.5s steps(6) infinite;
-}
-.cell.noHit {
-  background: url(images/Sad\ Slime.png);
-  width: 150px;
-  height: 150px;
-  animation: jump 0.5s steps(6) infinite;
-}
-
-.cell.angry {
-  background: url(images/Angry\ Slime.png);
-  width: 150px;
-  height: 150px;
-  animation: jump 0.5s steps(6) infinite;
-}
-
-@keyframes jump {
+@keyframes spawn-gem {
   100% {
-      background-position: -960px, 0;
+      background-position: -2850px, 0;
   }
-} */
-
-.top-bar, .start{
-  display: flex;
-  flex-direction: row;
-  justify-content: space-around;
-  align-items: center;
-  font-size: 2rem;
 }
+
 

@@ -20,6 +20,7 @@ var gameDisplay = document.querySelector('.game-display');
 var grid = document.querySelector('#grid');
 var cells;
 var moles = document.querySelectorAll('.mole')
+var gemDisplay = document.querySelector('#gemNum');
 var scoreDisplay = document.querySelector('#scoreNum');
 var secondsLeft = document.querySelector('#secondsLeft');
 var numLives = document.querySelector('#numLives');
@@ -30,21 +31,14 @@ var numLives = document.querySelector('#numLives');
 var lastSelectedCell;
 var timesUp = true;
 var score = 0;
-var lives = 5;
-var timeLeft = 15;
+var lives = 10;
+var gems = 0;
+var totalGems = 0;
+var angryHit = 0;
+var timeLeft = 60;
 var numberOfCells = [16, 25, 36]
 var setCells;
 
-
-function showInstructions (){
-    startDisplay.classList.remove('show');
-    instructionDisplay.classList.add('show');
-}
-
-function backToMenu (){
-    instructionDisplay.classList.remove('show');
-    startDisplay.classList.add('show');
-}
 
 function drawBoard (){
     //Verify that radio button is checked
@@ -59,14 +53,17 @@ function drawBoard (){
         if (selection[0].checked){
                 grid.classList.add('easy');
                 setCells = numberOfCells[0];
+                lives = 10;
             }
         else if (selection[1].checked){
             grid.classList.add('normal');
             setCells = numberOfCells[1];
+            lives = 8;
         }
         else if (selection[2].checked){
             grid.classList.add('expert');
             setCells = numberOfCells[2];
+            lives = 6;
         }
         for (var i = 0; i < setCells; i++){
             var newCell = document.createElement('div');
@@ -78,6 +75,7 @@ function drawBoard (){
             cells = document.querySelectorAll('.cell');
             //console.log(cells.length);
         }
+        numLives.innerHTML = lives;
         newGame();
     }
 }
@@ -87,16 +85,28 @@ function newGame () {
     countDown();
     //reset state
     scoreDisplay.textContent = score;
+    gemDisplay.textContent = gems;
     //run 
     timesUp = false;
     molePop();
     distractPop();
     angryMole();
+    getGems();
 }
 
 
 
 /*----------Helper Functions----------*/
+
+function showInstructions (){
+    startDisplay.classList.remove('show');
+    instructionDisplay.classList.add('show');
+}
+
+function backToMenu (){
+    instructionDisplay.classList.remove('show');
+    startDisplay.classList.add('show');
+}
 
 function countDown (){
     var interval = setInterval (function () {
@@ -129,9 +139,9 @@ function randomInterval (min, max) {
     return Math.round(Math.random() * (max-min) + min);
 }
 
-//Make moles appear
+//Make slime appear
 function molePop (){
-    var time = randomInterval(500, 1100);
+    var time = randomInterval(900, 1200);
     var position = randomCell(cells);
     position.classList.add('mole');
     position.addEventListener('mousedown', hitEm);
@@ -145,9 +155,9 @@ function molePop (){
     }, time) 
 }
 
-//Make distractor animal appear
+//Make sad slime appear
 function distractPop (){
-    var altTime = randomInterval(500, 1100);
+    var altTime = randomInterval(900, 1200);
     var altPosition = randomCell(cells);
     altPosition.classList.add('noHit');
     altPosition.addEventListener('mousedown', hitEm);
@@ -160,45 +170,120 @@ function distractPop (){
     }, altTime) 
 }
 
+//Make gems appear
+function getGems(){
+    var gemInterval = setInterval (function(){
+    var altPosition = randomCell(cells);
+        if (altPosition.classList.contains('mole') || altPosition.classList.contains('noHit') || altPosition.classList.contains('angry')){
+            return;
+        }
+        else {
+            altPosition.classList.add('gem');
+            checkGems(altPosition);
+            altPosition.addEventListener('mousedown', addGems);
+            if (timeLeft <= 0 || lives <= 0){
+                clearInterval(gemInterval);
+                endGame(); 
+            }
+        }
+        setTimeout(function(){
+        altPosition.classList.remove('gem');
+        altPosition.removeEventListener('mousedown', addGems)
+        }, 1000)
+     }, 3000) 
+ }
+
+// function getGems (){
+//     var altTime = randomInterval(500, 1100);
+//     var altPosition = randomCell(cells);
+//     altPosition.classList.add('gem');
+//     altPosition.addEventListener('mousedown', addGems);
+//     setTimeout (function(){
+//         altPosition.classList.remove('gem');
+//         altPosition.removeEventListener('mousedown', addGems)
+//         if (!timesUp){
+//             getGems();
+//         }
+//     }, altTime) 
+// }
+
+//Add gems to total when clicked
+function addGems (){
+    if (this.classList.contains('gem')){
+        gems += 1;
+        totalGems += 1;
+        gemDisplay.innerHTML = gems;
+        this.classList.remove('gem');
+        this.removeEventListener('mousedown', addGems);
+    }
+}
+
+//Check if player has enough gems to hit angry slimes
+function checkGems (cell){
+    if (gems >= 3){
+        cell.addEventListener('click', hitAngry)
+        console.log('Angry slimes can now be hit!')
+    } else {
+        return;
+    }
+}
+
+//Deduct 3 gems for every hit; add 20 to score
+function hitAngry (){
+    if (this.classList.contains('angry') & gems >= 3){
+        gems -= 3;
+        gemDisplay.innerHTML = gems;
+        console.log('gems traded for chance to hit angry slime!')
+        score += 20;
+        scoreDisplay.innerHTML = score;
+        angryHit += 1
+        console.log('you hit an angry slime!')
+        this.classList.remove('angry');
+        this.removeEventListener('click', hitAngry)
+    } 
+}
+
 //Make angry mole appear
 function angryMole(){
    var angry = setInterval (function(){
         var altPosition = randomCell(cells);
-        if (altPosition.classList.contains('mole') || altPosition.classList.contains('noHit')){
+        if (altPosition.classList.contains('mole') || altPosition.classList.contains('noHit') || altPosition.classList.contains('gem')){
             return;
         }
         else {
             altPosition.classList.add('angry');
-            console.log('added angry mole!');
+            checkGems(altPosition);
+            console.log('added angry slime!');
             if (timeLeft <= 0 || lives <= 0){
                 clearInterval(angry);
                 endGame();
                 // alert('Game over for angrymole!');  
             }
-            else if (timeLeft >= 10 && lives > 0){
+            else if (timeLeft >= 40 && lives > 0){
                 console.log('more than 10s left');
-                moleAttack(30, 0.8);
+                moleAttack(100, 0.4);
             } 
-            else if (timeLeft >= 5 && lives > 0){
+            else if (timeLeft >= 20 && lives > 0){
                 console.log('more than 5s left');
-                moleAttack(40, 0.8);
+                moleAttack(200, 0.5);
             }
             else if (timeLeft > 0 && lives > 0){
                 console.log('more than 0s left')
-                moleAttack(50, 0.8);
+                moleAttack(300, 0.6);
             }
         }
         setTimeout(function(){
             altPosition.classList.remove('angry');
-        }, 800)
+        }, 1000)
     }, 5000) 
 }
+
 
 //Calculate chances of mole successfully attacking 
 function moleAttack (minScore, chance){
     if (score < minScore){
-        if(Math.random() < chance){
-            lives -= 2;
+        if(Math.random() < 0.8){
+            lives -= 1;
             numLives.innerHTML = lives;
             console.log('less than minScore; hit!');
         }
@@ -207,7 +292,7 @@ function moleAttack (minScore, chance){
         }
     } 
     else {
-        if(Math.random() < 0.5){
+        if(Math.random() < chance){
             lives -= 1;
             numLives.innerHTML = lives;
             console.log('more than minScore; hit!');
@@ -239,12 +324,14 @@ function hitEm (event){
     this.removeEventListener('mousedown', hitEm);
 }
 
+//Clear game display; show ending display
 function endGame (){
     gameDisplay.classList.remove('show');
     endDisplay.classList.add('show');
-    endMessage.innerText = `Thank you for playing! \n\n Score: ${score} \n\n Lives: ${lives <= 0 ? 0 : lives}`;
+    endMessage.innerText = `Thank you for playing! \n\n Score: ${score} \n\n Lives: ${lives <= 0 ? 0 : lives} \n\n Gems collected: ${totalGems} \n\n Angry slimes boinked: ${angryHit}`;
 }
 
+//Reset game state and go back to menu
 function restartGame (){
     endDisplay.classList.remove('show');
     startDisplay.classList.add('show');
@@ -253,9 +340,13 @@ function restartGame (){
       }
     grid.removeAttribute('class');
     score = 0;
-    lives = 5;
-    numLives.innerHTML = lives;
-    timeLeft = 15;
+    totalGems = 0;
+    gems = 0;
+    gemDisplay.innerHTML = gems;
+    // lives = 5;
+    // numLives.innerHTML = lives;
+    angryHit = 0;
+    timeLeft = 60;
 }
 
 function autoResizeDiv(){
