@@ -174,14 +174,14 @@ h1 {
   cursor: url('images/Hammer-2.png.png'), auto;
 }
 
-.cell.mole {
+.cell.slime {
   background: url(images/Yellow\ Slime\ Short.png);
   width: 150px;
   height: 150px;
   animation: jump 0.8s steps(17) infinite;
 }
 
-.cell.noHit {
+.cell.sad {
   background: url(images/Sad\ Slime\ Short.png);
   width: 150px;
   height: 150px;
