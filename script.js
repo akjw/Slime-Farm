@@ -67,13 +67,9 @@ function drawBoard (){
         }
         for (var i = 0; i < setCells; i++){
             var newCell = document.createElement('div');
-            //console.log('added cell');
             newCell.classList.add('cell');
-            //console.log('added class of cell')
             grid.appendChild(newCell);
-            //console.log('appended cell');
             cells = document.querySelectorAll('.cell');
-            //console.log(cells.length);
         }
         numLives.innerHTML = lives;
         newGame();
@@ -83,15 +79,28 @@ function drawBoard (){
 function newGame () {
     //start countdown
     countDown();
-    //reset state
+    //reset display
     scoreDisplay.textContent = score;
     gemDisplay.textContent = gems;
-    //run 
+    //run game
     timesUp = false;
-    molePop();
-    distractPop();
-    angryMole();
-    getGems();
+    // molePop();
+    //distractPop();
+    if (grid.classList.contains('easy')){
+        molePop(800, 1100);
+        angryMole(15000);
+        getGems(5000);
+    } else if (grid.classList.contains('normal')){
+        angryMole(10000);
+        getGems(4000);
+    } else if (grid.classList.contains('expert')){
+        angryMole(5000);
+        getGems(5000);
+    }
+    // molePop();
+    // distractPop();
+    // angryMole();
+    // getGems();
 }
 
 
@@ -140,8 +149,22 @@ function randomInterval (min, max) {
 }
 
 //Make slime appear
-function molePop (){
-    var time = randomInterval(900, 1200);
+function molePop (minInt, maxInt){
+    // var time;
+    // if (grid.classList.contains('easy')){
+    //     time = randomInterval(800, 1200);
+    //     console.log(`Time is ${time}`);
+    // } else if (grid.classList.contains('normal')){
+    //     time = randomInterval(800, 1000);
+    //     console.log(`Time is ${time}`);
+    // } else if (grid.classList.contains('expert')){
+    //     time = randomInterval(800, 900);
+    //     console.log(`Time is ${time}`);
+    // }
+    var time = randomInterval(minInt, maxInt);
+    console.log(time);
+    // var time = randomInterval(minInt, maxInt)
+    // var time = randomInterval.apply(null, arguments)
     var position = randomCell(cells);
     position.classList.add('mole');
     position.addEventListener('mousedown', hitEm);
@@ -157,7 +180,9 @@ function molePop (){
 
 //Make sad slime appear
 function distractPop (){
-    var altTime = randomInterval(900, 1200);
+    // var altTime = randomInterval(minInt, maxInt);
+    // var altTime = randomInterval(800, 1100);
+    var altTime = randomInterval.apply(null, arguments)
     var altPosition = randomCell(cells);
     altPosition.classList.add('noHit');
     altPosition.addEventListener('mousedown', hitEm);
@@ -171,7 +196,7 @@ function distractPop (){
 }
 
 //Make gems appear
-function getGems(){
+function getGems(spawnRate){
     var gemInterval = setInterval (function(){
     var altPosition = randomCell(cells);
         if (altPosition.classList.contains('mole') || altPosition.classList.contains('noHit') || altPosition.classList.contains('angry')){
@@ -190,7 +215,7 @@ function getGems(){
         altPosition.classList.remove('gem');
         altPosition.removeEventListener('mousedown', addGems)
         }, 1000)
-     }, 3000) 
+     }, spawnRate) 
  }
 
 // function getGems (){
@@ -244,7 +269,7 @@ function hitAngry (){
 }
 
 //Make angry mole appear
-function angryMole(){
+function angryMole(spawnRate){
    var angry = setInterval (function(){
         var altPosition = randomCell(cells);
         if (altPosition.classList.contains('mole') || altPosition.classList.contains('noHit') || altPosition.classList.contains('gem')){
@@ -275,7 +300,7 @@ function angryMole(){
         setTimeout(function(){
             altPosition.classList.remove('angry');
         }, 1000)
-    }, 5000) 
+    }, spawnRate) 
 }
 
 
@@ -328,7 +353,7 @@ function hitEm (event){
 function endGame (){
     gameDisplay.classList.remove('show');
     endDisplay.classList.add('show');
-    endMessage.innerText = `Thank you for playing! \n\n Score: ${score} \n\n Lives: ${lives <= 0 ? 0 : lives} \n\n Gems collected: ${totalGems} \n\n Angry slimes boinked: ${angryHit}`;
+    endMessage.innerText = `Thank you for playing! \n\n Score: ${score} \n\n Lives: ${lives <= 0 ? 0 : lives} \n\n Gems collected: ${totalGems} \n\n Wild slimes boinked: ${angryHit}`;
 }
 
 //Reset game state and go back to menu
