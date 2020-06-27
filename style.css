@@ -165,7 +165,6 @@ h1 {
   justify-content: center;
   align-items: center;
   cursor: url('images/Hammer-1.png.png'), auto;
-  /* cursor: pointer; */
   height: var(--cell-size);
   width: var(--cell-size);
 }
@@ -195,27 +194,6 @@ h1 {
   animation: jump 0.8s steps(17) infinite;
 }
 
-/* .cell.mole {
-  background: url(images/Yellow\ Slime\ Full\ .png);
-  width: 150px;
-  height: 150px;
-  animation: full-jump 0.9s steps(21) infinite;
-}
-
-.cell.noHit {
-  background: url(images/Sad\ Slime\ Full.png);
-  width: 150px;
-  height: 150px;
-  animation: full-jump 0.9s steps(21) infinite;
-}
-
-.cell.angry {
-  background: url(images/Angry\ Slime\ Full.png);
-  width: 150px;
-  height: 150px;
-  animation: full-jump 0.9s steps(21) infinite;
-} */
-
 .cell.gem {
   background: url(images/Gem.png);
   width: 150px;
@@ -226,13 +204,6 @@ h1 {
 @keyframes jump {
   100% {
       background-position: -2550px, 0;
-  }
-}
-
-
-@keyframes full-jump {
-  100% {
-      background-position: -3150px, 0;
   }
 }
 
