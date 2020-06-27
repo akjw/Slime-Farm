@@ -103,12 +103,12 @@ function newGame () {
         popSlimes('sad', 800, 1200);
         angrySlimes(10000);
         getGems(3000);
-    } else if (grid.classList.contains('normal')){
+    } else if (difficulty == 'normal'){
         popSlimes('slime', 700, 1000);
         popSlimes('sad', 700, 1000);
         angrySlimes(10000);
         getGems(4000);
-    } else if (grid.classList.contains('expert')){
+    } else if (difficulty =='expert'){
         popSlimes('slime', 600, 900);
         popSlimes('sad', 600, 900);
         angrySlimes(5000);
@@ -157,7 +157,7 @@ function randomCell (cells) {
 
 function randomInterval (min, max) {
     //set random duration for how long animal stays popped up
-    return Math.round(Math.random() * (max-min) + min);
+    return Math.floor(Math.random() * (max-min+1) + min);
 }
 
 //Make slimes appear
