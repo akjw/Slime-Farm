@@ -45,6 +45,10 @@ var angryHit = 0;
 var timeLeft = 60;
 var numberOfCells = [16, 25, 36]
 var setCells;
+//Score benchmarks for different ending messages; varies with difficulty level 
+var easyRange = [200, 300, 5]
+var normalRange = [150, 250, 5]
+var expertRange = [130, 230, 10]
 
 
 function drawBoard (){
@@ -85,7 +89,7 @@ function drawBoard (){
             grid.appendChild(newCell);
             cells = document.querySelectorAll('.cell');
         }
-        numLives.innerHTML = lives;
+        numLives.textContent = lives;
         newGame();
     }
 }
@@ -98,6 +102,7 @@ function newGame () {
     gemDisplay.textContent = gems;
     //run game
     timesUp = false;
+    //run slime spawn functions with different intervals depending on difficulty
     if (difficulty == 'easy'){
         popSlimes('slime', 800, 1200);
         popSlimes('sad', 800, 1200);
@@ -137,7 +142,7 @@ function countDown (){
             timesUp = true;
             endGame();
          }
-         secondsLeft.innerHTML = timeLeft;
+         secondsLeft.textContent = timeLeft;
          timeLeft--;
      }, 1000)
  }
@@ -206,7 +211,7 @@ function addGems (){
         gem.currentTime = 0;
         gems += 1;
         totalGems += 1;
-        gemDisplay.innerHTML = gems;
+        gemDisplay.textContent = gems;
         this.classList.remove('gem');
         this.removeEventListener('mousedown', addGems);
     }
@@ -215,7 +220,7 @@ function addGems (){
 //Check if player has enough gems to hit angry slimes
 function checkGems (cell){
     if (gems >= 3){
-        cell.addEventListener('click', hitAngry)
+        cell.addEventListener('mousedown', hitAngry)
         console.log('Angry slimes can now be hit!')
     } else {
         return;
@@ -226,16 +231,16 @@ function checkGems (cell){
 function hitAngry (){
     if (this.classList.contains('angry') & gems >= 3){
         gems -= 3;
-        gemDisplay.innerHTML = gems;
+        gemDisplay.textContent = gems;
         console.log('gems traded for chance to hit angry slime!')
         angryBoinked.play();
         angryBoinked.currentTime = 0;
         score += 20;
-        scoreDisplay.innerHTML = score;
+        scoreDisplay.textContent = score;
         angryHit += 1
         console.log('you hit an angry slime!')
         this.classList.remove('angry');
-        this.removeEventListener('click', hitAngry)
+        this.removeEventListener('mousedown', hitAngry)
     } 
 }
 
@@ -281,7 +286,7 @@ function angryAttack (minScore, chance){
             mauled.play();
             mauled.currentTime = 0;
             lives -= 1;
-            numLives.innerHTML = lives;
+            numLives.textContent = lives;
             console.log('less than minScore; hit!');
         }
         else {
@@ -293,7 +298,7 @@ function angryAttack (minScore, chance){
             mauled.play();
             mauled.currentTime = 0;
             lives -= 1;
-            numLives.innerHTML = lives;
+            numLives.textContent = lives;
             console.log('more than minScore; hit!');
         }
         else{
@@ -308,7 +313,7 @@ function hitEm (){
         boinked.play();
         boinked.currentTime = 0;
         score += 10;
-        scoreDisplay.innerHTML = score;
+        scoreDisplay.textContent = score;
         this.classList.remove('slime');
     } else {
         console.log('penalty!');
@@ -317,55 +322,41 @@ function hitEm (){
         lives -= 1;
         if (lives < 1){
             timesUp = true;
-            numLives.innerHTML = 0;
+            numLives.textContent = 0;
             endGame();
         }
-        numLives.innerHTML = lives;
+        numLives.textContent = lives;
         this.classList.remove('sad');
     }
     this.removeEventListener('mousedown', hitEm);
 }
 
+
 //Generate end text
-function endingText (){
+function endingText (array){
     var endText;
-    if (difficulty == 'easy'){
-        if (score < 200){
-            endText = 'Most of your slimes escaped...maybe find a new line of work?';
-        } else if (score > 200 & score < 300){
-            endText = "You herded most of your slimes back--all in a day's work!";
-        } else if (score > 300){
-            endText = "No slime is escaping on your watch!";
-        } else if (score > 300 && angryHit > 5){
-            endText = "You're one tough cookie--those wild slimes ain't seen nothin' yet!";
-        }
-    } else if (difficulty == 'normal'){
-        if (score < 150){
-            endText = 'Most of your slimes escaped...maybe find a new line of work?';
-        } else if (score > 150 & score < 250){
-            endText = "You herded most of your slimes back--all in a day's work!";
-        } else if (score > 250){
-            endText = "No slime is escaping on your watch!";
-        } else if (score > 250 && angryHit > 5){
-            endText = "You're one tough cookie--those wild slimes ain't seen nothin' yet!";
-        }
-    } else {
-        if (score < 130){
-            endText = 'Most of your slimes escaped...maybe find a new line of work?';
-        } else if (score > 130 & score < 230){
-            endText = "You herded most of your slimes back--all in a day's work!";
-        } else if (score > 230){
-            endText = "No slime is escaping on your watch!";
-        } else if (score > 230 && angryHit > 10){
-            endText = "You're one tough cookie--those wild slimes ain't seen nothin' yet!";
-        }
+    if (score < array[0]){
+        endText = 'Most of your slimes escaped...maybe find a new line of work?';
+    } else if (score > array[0] & score < array[1]){
+        endText = "You herded most of your slimes back--all in a day's work!";
+    } else if (score > array[1]){
+        endText = "No slime is escaping on your watch!";
+    } else if (score > array[1] && angryHit > array[2]){
+        endText = "You're one tough cookie--those wild slimes ain't seen nothin' yet!";
     }
     return endText;
 }
 
 //Clear game display; show ending display
 function endGame (){
-    var endingMsg = endingText();
+    var endingMsg;
+    if (difficulty == 'easy'){
+        endingMsg = endingText(easyRange);
+    } else if (difficulty == 'normal'){
+        endingMsg = endingText(normalRange);
+    } else {
+        endingMsg = endingText(expertRange);
+    }
     gameDisplay.classList.remove('show');
     endDisplay.classList.add('show');
     endMessage.innerText = `${endingMsg} \n\n\n Score: ${score} \n\n Gems collected: ${totalGems} \n\n Wild slimes boinked: ${angryHit}`;
@@ -383,7 +374,7 @@ function restartGame (){
     score = 0;
     totalGems = 0;
     gems = 0;
-    gemDisplay.innerHTML = gems;
+    gemDisplay.textContent = gems;
     angryHit = 0;
     timeLeft = 60;
 }

@@ -25,7 +25,7 @@ body {
 .end-state, .start-state, .instruction-display {
   display: none;
   position: fixed;
-  background-color: rgba(93, 163, 163, 0.7);
+  background-color: rgba(95, 97, 97, 0.5);
   top: 0;
   left: 0;
   right: 0;
@@ -174,28 +174,28 @@ h1 {
 }
 
 .cell.slime {
-  background: url(images/Yellow\ Slime\ Short.png);
+  background: url('images/Yellow\ Slime\ Short.png');
   width: 150px;
   height: 150px;
   animation: jump 0.8s steps(17) infinite;
 }
 
 .cell.sad {
-  background: url(images/Sad\ Slime\ Short.png);
+  background: url('images/Sad\ Slime\ Short.png');
   width: 150px;
   height: 150px;
   animation: jump 0.8s steps(17) infinite;
 }
 
 .cell.angry {
-  background: url(images/Angry\ Slime\ Short.png);
+  background: url('images/Angry\ Slime\ Short.png');
   width: 150px;
   height: 150px;
   animation: jump 0.8s steps(17) infinite;
 }
 
 .cell.gem {
-  background: url(images/Gem.png);
+  background: url('images/Gem.png');
   width: 150px;
   height: 150px;
   animation: spawn-gem 0.9s steps(19) infinite;
