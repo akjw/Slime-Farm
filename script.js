@@ -379,9 +379,9 @@ function restartGame (){
     timeLeft = 60;
 }
 
-function autoResizeDiv(){
-    document.getElementsByClassName('game-display').style.height = window.innerHeight +'px';
-}
+// function autoResizeDiv(){
+//     document.getElementsByClassName('game-display').style.height = window.innerHeight +'px';
+// }
 
-window.onresize = autoResizeDiv;
-autoResizeDiv();
+// window.onresize = autoResizeDiv;
+// autoResizeDiv();
