@@ -55,7 +55,7 @@ localStorage.getItem("nhighScore") || 0;
 var exName = "exhighScore";
 localStorage.getItem("exhighScore") || 0;
 //Score benchmarks for different ending messages; varies with difficulty level 
-var easyRange = [200, 300, 5]
+var easyRange = [225, 325, 5]
 var normalRange = [150, 250, 5]
 var expertRange = [115, 215, 10]
 
@@ -116,18 +116,18 @@ function newGame () {
     timesUp = false;
     //run slime spawn functions with different intervals depending on difficulty
     if (difficulty == 'easy'){
-        popSlimes('slime', 800, 1200);
-        popSlimes('sad', 800, 1200);
+        popSlimes('slime', 1000, 1200);
+        popSlimes('sad', 1000, 1200);
         angrySlimes(10000);
         getGems(3000);
     } else if (difficulty == 'normal'){
-        popSlimes('slime', 700, 1000);
-        popSlimes('sad', 700, 1000);
+        popSlimes('slime', 800, 1000);
+        popSlimes('sad', 800, 1000);
         angrySlimes(10000);
         getGems(4000);
     } else if (difficulty =='expert'){
-        popSlimes('slime', 600, 900);
-        popSlimes('sad', 600, 900);
+        popSlimes('slime', 700, 900);
+        popSlimes('sad', 700, 900);
         angrySlimes(5000);
         getGems(5000);
     }
@@ -164,11 +164,10 @@ function randomCell (cells) {
     //Choose randomCell for animal to pop up in
     var index = Math.floor(Math.random() * cells.length)
     var cell = cells[index];
-    //If new cell is the same as previous cell, pick another cell
-    if (cell === lastSelectedCell){
+    //Check that cell doesn't already contain a sprite
+    if (cell.classList.contains('slime' || 'sad' || 'angry' || 'gem')){
         randomCell(cells);
     }
-    lastSelectedCell = cell;
     return cell;
 }
 
@@ -196,24 +195,18 @@ function popSlimes (type, minInt, maxInt){
 //Make gems appear
 function getGems(spawnRate){
     var gemInterval = setInterval (function(){
-    var altPosition = randomCell(cells);
-        if (altPosition.classList.contains('slime') || altPosition.classList.contains('sad') || altPosition.classList.contains('angry')){
-            return;
-        }
-        else {
-            altPosition.classList.add('gem');
-            checkGems(altPosition);
-            altPosition.addEventListener('mousedown', addGems);
-            if (timeLeft <= 0 || lives <= 0){
-                clearInterval(gemInterval);
-                endGame(); 
-            }
-        }
-        setTimeout(function(){
-        altPosition.classList.remove('gem');
-        altPosition.removeEventListener('mousedown', addGems)
-        }, 1000)
-     }, spawnRate) 
+    var altPosition = randomCell(cells);    
+    altPosition.classList.add('gem');
+    altPosition.addEventListener('mousedown', addGems);
+    if (timeLeft <= 0 || lives <= 0){
+        clearInterval(gemInterval);
+        endGame(); 
+    }
+    setTimeout(function(){
+    altPosition.classList.remove('gem');
+    altPosition.removeEventListener('mousedown', addGems)
+    }, 1000)
+    }, spawnRate) 
  }
 
 //Add gems to total when clicked
@@ -239,7 +232,7 @@ function checkGems (cell){
     }
 }
 
-//Deduct 3 gems for every hit; add 20 to score
+//Deduct 3 gems for every hit; add 25 to score
 function hitAngry (){
     if (this.classList.contains('angry') & gems >= 3){
         gems -= 3;
@@ -258,37 +251,32 @@ function hitAngry (){
 
 //Make angry slime appear
 function angrySlimes(spawnRate){
-   var angry = setInterval (function(){
-        var altPosition = randomCell(cells);
-        if (altPosition.classList.contains('slime') || altPosition.classList.contains('sad') || altPosition.classList.contains('gem')){
-            return;
-        }
-        else {
-            altPosition.classList.add('angry');
-            checkGems(altPosition);
-            console.log('added angry slime!');
-            if (timeLeft <= 0 || lives <= 0){
-                clearInterval(angry);
-                endGame(); 
-            }
-            else if (timeLeft >= 40 && lives > 0){
-                console.log('more than 10s left');
-                angryAttack(100, 0.4);
-            } 
-            else if (timeLeft >= 20 && lives > 0){
-                console.log('more than 5s left');
-                angryAttack(200, 0.5);
-            }
-            else if (timeLeft > 0 && lives > 0){
-                console.log('more than 0s left')
-                angryAttack(300, 0.6);
-            }
-        }
-        setTimeout(function(){
-            altPosition.classList.remove('angry');
-        }, 1000)
-    }, spawnRate) 
-}
+    var angry = setInterval (function(){
+    var altPosition = randomCell(cells);
+    altPosition.classList.add('angry');
+    checkGems(altPosition);
+    console.log('added angry slime!');
+    if (timeLeft <= 0 || lives <= 0){
+        clearInterval(angry);
+        endGame(); 
+    }
+    else if (timeLeft >= 40 && lives > 0){
+        console.log('more than 10s left');
+        angryAttack(100, 0.4);
+    } 
+    else if (timeLeft >= 20 && lives > 0){
+        console.log('more than 5s left');
+        angryAttack(200, 0.5);
+    }
+    else if (timeLeft > 0 && lives > 0){
+        console.log('more than 0s left')
+        angryAttack(300, 0.6);
+    }
+         setTimeout(function(){
+             altPosition.classList.remove('angry');
+         }, 1000)
+     }, spawnRate) 
+ }
 
 
 //Calculate chances of angry slime successfully attacking 
