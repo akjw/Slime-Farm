@@ -40,7 +40,6 @@ var difficulty;
 var lastSelectedCell;
 var timesUp = true;
 var score = 0;
-var highScore = localStorage.getItem("highScore") || 0;
 var lives = 10;
 var gems = 0;
 var totalGems = 0;
@@ -48,6 +47,13 @@ var angryHit = 0;
 var timeLeft = 60;
 var numberOfCells = [16, 25, 36]
 var setCells;
+//High scores for different levels
+var easyName = "ehighScore";
+localStorage.getItem("ehighScore") || 0;
+var normName = "nhighScore";
+localStorage.getItem("nhighScore") || 0;
+var exName = "exhighScore";
+localStorage.getItem("exhighScore") || 0;
 //Score benchmarks for different ending messages; varies with difficulty level 
 var easyRange = [200, 300, 5]
 var normalRange = [150, 250, 5]
@@ -354,28 +360,31 @@ function endingText (array){
 }
 
 //Check for high score
-function recordScores (){
-    if (score > highScore) {
-        localStorage.setItem("highScore", score);
-        highScore = localStorage.getItem("highScore");
-        newHighScore.textContent = `You've set a new record score of ${highScore}!`;
+
+function recordScores (name){
+    if (score > localStorage.getItem(name)) {
+        localStorage.setItem(name, score);
+        newHighScore.textContent = `You've set a new record score of ${localStorage.getItem(name)}!`;
     }
-    else if (score < highScore) {
-        newHighScore.textContent = `The record score to beat is: ${highScore}`;
+    else if (score < localStorage.getItem(name)) {
+        newHighScore.textContent = `The record score to beat is: ${localStorage.getItem(name)}`;
     }  
 }
+
 
 //Clear game display; show ending display
 function endGame (){
     var endingMsg;
     if (difficulty == 'easy'){
         endingMsg = endingText(easyRange);
+        recordScores(easyName);
     } else if (difficulty == 'normal'){
         endingMsg = endingText(normalRange);
+        recordScores(normName);
     } else {
         endingMsg = endingText(expertRange);
+        recordScores(exName);
     }
-    recordScores();
     gameDisplay.classList.remove('show');
     endDisplay.classList.add('show');
     endMessage.innerHTML = `${endingMsg} <br><br><br> Score: ${score} <br><br> Gems collected: ${totalGems} <br><br> Wild slimes boinked: ${angryHit}`;
@@ -384,8 +393,6 @@ function endGame (){
 //Reset game state and go back to menu
 function restartGame (){
     theme.pause();
-    endDisplay.classList.remove('show');
-    startDisplay.classList.add('show');
     while (grid.firstChild) {
         grid.removeChild(grid.firstChild)
       }
@@ -396,6 +403,8 @@ function restartGame (){
     gemDisplay.textContent = gems;
     angryHit = 0;
     timeLeft = 60;
+    endDisplay.classList.remove('show');
+    startDisplay.classList.add('show');
 }
 
 // function autoResizeDiv(){
