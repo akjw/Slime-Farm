@@ -57,7 +57,7 @@ localStorage.getItem("exhighScore") || 0;
 //Score benchmarks for different ending messages; varies with difficulty level 
 var easyRange = [200, 300, 5]
 var normalRange = [150, 250, 5]
-var expertRange = [130, 230, 10]
+var expertRange = [115, 215, 10]
 
 
 function drawBoard (){
@@ -349,11 +349,11 @@ function endingText (array){
     var endText;
     if (score < array[0]){
         endText = 'Most of your slimes escaped...maybe find a new line of work?';
-    } else if (score > array[0] & score < array[1]){
+    } else if (score >= array[0] & score < array[1]){
         endText = "You herded most of your slimes back--all in a day's work!";
-    } else if (score > array[1]){
+    } else if (score >= array[1]){
         endText = "No slime is escaping on your watch!";
-    } else if (score > array[1] && angryHit > array[2]){
+    } else if (score >= array[1] && angryHit > array[2]){
         endText = "You're one tough cookie--those wild slimes ain't seen nothin' yet!";
     }
     return endText;
@@ -407,9 +407,3 @@ function restartGame (){
     startDisplay.classList.add('show');
 }
 
-// function autoResizeDiv(){
-//     document.getElementsByClassName('game-display').style.height = window.innerHeight +'px';
-// }
-
-// window.onresize = autoResizeDiv;
-// autoResizeDiv();
