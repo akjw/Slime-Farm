@@ -28,12 +28,12 @@ var secondsLeft = document.querySelector('#secondsLeft');
 var numLives = document.querySelector('#numLives');
 
 /*----------Music & Sound Effects----------*/
-var theme = new Audio("/music/Slime Farm Theme.mp3")
-var boinked = new Audio("/music/Boinked.mp3");
+var theme = new Audio("music/Slime Farm Theme.mp3")
+var boinked = new Audio("music/Boinked.mp3");
 var bullied = new Audio("music/Bullied.mp3");
-var gem = new Audio("/music/Gem.mp3");
-var mauled = new Audio("/music/Mauled.mp3");
-var angryBoinked = new Audio("/music/AngryBoinked.mp3")
+var gem = new Audio("music/Gem.mp3");
+var mauled = new Audio("music/Mauled.mp3");
+var angryBoinked = new Audio("music/AngryBoinked.mp3")
 
 /*----------Game Variables----------*/
 var difficulty;
