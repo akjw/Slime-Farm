@@ -11,6 +11,7 @@ startButton.addEventListener('click', drawBoard);
 
 /*----------Ending Display----------*/
 var endDisplay = document.querySelector('.end-state');
+var newHighScore = document.querySelector('.new-record-notif')
 var endMessage = document.querySelector('.outcome-message');
 var restartButton = document.querySelector('#restart');
 restartButton.addEventListener('click', restartGame);
@@ -18,6 +19,7 @@ restartButton.addEventListener('click', restartGame);
 /*----------Game Display----------*/
 var gameDisplay = document.querySelector('.game-display');
 var grid = document.querySelector('#grid');
+var cellClass;
 var cells;
 var moles = document.querySelectorAll('.mole')
 var gemDisplay = document.querySelector('#gemNum');
@@ -38,6 +40,7 @@ var difficulty;
 var lastSelectedCell;
 var timesUp = true;
 var score = 0;
+var highScore = localStorage.getItem("highScore") || 0;
 var lives = 10;
 var gems = 0;
 var totalGems = 0;
@@ -69,23 +72,26 @@ function drawBoard (){
                 grid.classList.add('easy');
                 difficulty = 'easy';
                 setCells = numberOfCells[0];
+                cellClass = 'cell sm';
                 lives = 10;
             }
         else if (selection[1].checked){
             grid.classList.add('normal');
             difficulty = 'normal'
             setCells = numberOfCells[1];
+            cellClass = 'cell md';
             lives = 8;
         }
         else if (selection[2].checked){
             grid.classList.add('expert');
             difficulty = 'expert'
             setCells = numberOfCells[2];
+            cellClass = 'cell';
             lives = 6;
         }
         for (var i = 0; i < setCells; i++){
             var newCell = document.createElement('div');
-            newCell.classList.add('cell');
+            newCell.setAttribute('class', cellClass);
             grid.appendChild(newCell);
             cells = document.querySelectorAll('.cell');
         }
@@ -235,7 +241,7 @@ function hitAngry (){
         console.log('gems traded for chance to hit angry slime!')
         angryBoinked.play();
         angryBoinked.currentTime = 0;
-        score += 20;
+        score += 25;
         scoreDisplay.textContent = score;
         angryHit += 1
         console.log('you hit an angry slime!')
@@ -347,6 +353,18 @@ function endingText (array){
     return endText;
 }
 
+//Check for high score
+function recordScores (){
+    if (score > highScore) {
+        localStorage.setItem("highScore", score);
+        highScore = localStorage.getItem("highScore");
+        newHighScore.textContent = `You've set a new record score of ${highScore}!`;
+    }
+    else if (score < highScore) {
+        newHighScore.textContent = `The record score to beat is: ${highScore}`;
+    }  
+}
+
 //Clear game display; show ending display
 function endGame (){
     var endingMsg;
@@ -357,9 +375,10 @@ function endGame (){
     } else {
         endingMsg = endingText(expertRange);
     }
+    recordScores();
     gameDisplay.classList.remove('show');
     endDisplay.classList.add('show');
-    endMessage.innerText = `${endingMsg} \n\n\n Score: ${score} \n\n Gems collected: ${totalGems} \n\n Wild slimes boinked: ${angryHit}`;
+    endMessage.innerHTML = `${endingMsg} <br><br><br> Score: ${score} <br><br> Gems collected: ${totalGems} <br><br> Wild slimes boinked: ${angryHit}`;
 }
 
 //Reset game state and go back to menu

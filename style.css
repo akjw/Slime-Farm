@@ -1,14 +1,9 @@
 /*---General styles---*/
 
-* , *::before, *::after{
+* {
   box-sizing: border-box;
 }
   
-
-:root {
-  --cell-size: 150px;
-}
-
 body {
   margin: 0;
   padding: 0;
@@ -19,7 +14,6 @@ body {
   background-size: cover;
   width: 100%;
   height: 90%;
-  /* overflow: hidden; */
 }
 
 /*---Starting display, Instructions, Ending display---*/
@@ -35,16 +29,21 @@ body {
   justify-content: center;
   align-items: center;
   color: white;
-  font-size: 5rem;
   flex-direction: column;
 }
 
-.start-message, .outcome-message, #instructions, .level-select, #back, #start, #restart {
-  font-size: 2rem;
+.instruction-display p {
+  font-size: 12px;
+}
+
+.start-message, .new-record-notif, .outcome-message, #instructions, .level-select, #back, #start, #restart {
+  font-size: 18px;
   text-align: center;
 }
 
 .start-message {
+  font-size: 24px;
+  font-weight: bold;
   margin-bottom: 80px;
 }
 
@@ -53,18 +52,20 @@ span {
 }
 
 .level-select {
-  margin: 100px;
+  margin: 50px;
 }
 
 ul {
   list-style: none;
 }
 
+li:first-child{
+  margin-top: 30px;
+}
+
 li {
-  display: inline-block;
-  margin-right: 20px; 
-  /* margin-left: 15px; */
-  font-size: 2rem;
+  margin-right: 65px;
+  margin-bottom: 25px;
   text-align: center;
 }
 
@@ -82,11 +83,7 @@ input:checked + label {
 
 #start,  #restart {
   cursor: pointer;
-  margin: 100px;
-}
-
-.instruction-display p {
-  font-size: 16px;
+  margin: 30px;
 }
 
 #back {
@@ -122,19 +119,19 @@ input:checked + label {
   box-shadow: 4px 4px 4px rgba(177, 175, 175, 0.5);
 }
 
-h1 {
-  text-align: center;
-  font-size: 2rem;
-}
-
 .top-bar {
   display: flex;
   flex-direction: row;
   justify-content: space-around;
   align-items: center;
-  font-size: 2rem;
+  font-size: 16px;
 }
 
+h1 {
+  text-align: center;
+  font-size: 18px;
+  font-weight: bold;
+}
 
 #grid {
   display: grid;
@@ -142,13 +139,12 @@ h1 {
   align-items: center;
   align-content: center;
   justify-items: center;
-  /* height: 100%;
-  width: 100%; */
 }
 
 .easy {
   grid-template-columns: repeat(4, auto);
   grid-template-rows: repeat(4, auto);
+  margin-top: 50px;
 }
 
 .normal {
@@ -162,13 +158,23 @@ h1 {
 }
 
 .cell {
-  border: 1px solid black;
+  /* border: 1px solid black; */
   display: flex;
   justify-content: center;
   align-items: center;
   cursor: url('images/Hammer-1.png.png'), auto;
-  height: var(--cell-size);
-  width: var(--cell-size);
+  height: 100px;
+  width: 100px;
+}
+
+.cell.sm {
+  height: 125px;
+  width: 125px;;
+}
+
+.cell.md {
+  height: 115px;
+  width: 115px;;
 }
 
 .cell:active {
@@ -177,41 +183,41 @@ h1 {
 
 .cell.slime {
   background: url('images/Yellow\ Slime\ Short.png');
-  width: 150px;
-  height: 150px;
+  width: 96px;
+  height: 96px;
   animation: jump 0.8s steps(17) infinite;
 }
 
 .cell.sad {
   background: url('images/Sad\ Slime\ Short.png');
-  width: 150px;
-  height: 150px;
+  width: 96px;
+  height: 96px;
   animation: jump 0.8s steps(17) infinite;
 }
 
 .cell.angry {
   background: url('images/Angry\ Slime\ Short.png');
-  width: 150px;
-  height: 150px;
+  width: 96px;
+  height: 96px;
   animation: jump 0.8s steps(17) infinite;
 }
 
 .cell.gem {
   background: url('images/Gem.png');
-  width: 150px;
-  height: 150px;
+  width: 96px;
+  height: 96px;
   animation: spawn-gem 0.9s steps(19) infinite;
 }
 
 @keyframes jump {
   100% {
-      background-position: -2550px, 0;
+      background-position: -1632px, 0;
   }
 }
 
 @keyframes spawn-gem {
   100% {
-      background-position: -2850px, 0;
+      background-position: -1824px, 0;
   }
 }
 
