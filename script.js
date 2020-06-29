@@ -1,4 +1,5 @@
 /*----------Starting Display----------*/
+
 var startDisplay = document.querySelector('.start-state');
 var instructuons = document.querySelector('#instructions');
 instructions.addEventListener('click', showInstructions);
@@ -10,6 +11,7 @@ var startButton = document.querySelector('#start');
 startButton.addEventListener('click', drawBoard);
 
 /*----------Ending Display----------*/
+
 var endDisplay = document.querySelector('.end-state');
 var newHighScore = document.querySelector('.new-record-notif')
 var endMessage = document.querySelector('.outcome-message');
@@ -17,6 +19,7 @@ var restartButton = document.querySelector('#restart');
 restartButton.addEventListener('click', restartGame);
 
 /*----------Game Display----------*/
+
 var gameDisplay = document.querySelector('.game-display');
 var grid = document.querySelector('#grid');
 var cellClass;
@@ -28,6 +31,7 @@ var secondsLeft = document.querySelector('#secondsLeft');
 var numLives = document.querySelector('#numLives');
 
 /*----------Music & Sound Effects----------*/
+
 var theme = new Audio("music/Slime Farm Theme.mp3")
 var boinked = new Audio("music/Boinked.mp3");
 var bullied = new Audio("music/Bullied.mp3");
@@ -36,6 +40,7 @@ var mauled = new Audio("music/Mauled.mp3");
 var angryBoinked = new Audio("music/AngryBoinked.mp3")
 
 /*----------Game Variables----------*/
+
 var difficulty;
 var lastSelectedCell;
 var timesUp = true;
@@ -172,7 +177,7 @@ function randomCell (cells) {
 }
 
 function randomInterval (min, max) {
-    //set random duration for how long animal stays popped up
+    //set random duration for how long sprite stays popped up
     return Math.floor(Math.random() * (max-min+1) + min);
 }
 
@@ -182,7 +187,7 @@ function popSlimes (type, minInt, maxInt){
     var position = randomCell(cells);
     position.classList.add(type);
     position.addEventListener('mousedown', hitEm);
-    //remove slime & eventlistener after interval; continue making moles if time remains
+    //remove slime & eventlistener after interval; continue making slimes if time remains
     setTimeout (function(){
         position.classList.remove(type);
         position.removeEventListener('mousedown', hitEm)
@@ -227,9 +232,7 @@ function checkGems (cell){
     if (gems >= 3){
         cell.addEventListener('mousedown', hitAngry)
         console.log('Angry slimes can now be hit!')
-    } else {
-        return;
-    }
+    } 
 }
 
 //Deduct 3 gems for every hit; add 25 to score
@@ -348,7 +351,6 @@ function endingText (array){
 }
 
 //Check for high score
-
 function recordScores (name){
     if (score > localStorage.getItem(name)) {
         localStorage.setItem(name, score);
