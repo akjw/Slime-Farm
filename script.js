@@ -121,18 +121,18 @@ function newGame () {
     timesUp = false;
     //run slime spawn functions with different intervals depending on difficulty
     if (difficulty == 'easy'){
-        popSlimes('slime', 1000, 1200);
-        popSlimes('sad', 1000, 1200);
+        popSlimes('slime', 2000, 2200);
+        popSlimes('sad', 2000, 2200);
         angrySlimes(10000);
         getGems(3000);
     } else if (difficulty == 'normal'){
-        popSlimes('slime', 800, 1000);
-        popSlimes('sad', 800, 1000);
+        popSlimes('slime', 1800, 2000);
+        popSlimes('sad', 1800, 2000);
         angrySlimes(10000);
         getGems(4000);
     } else if (difficulty =='expert'){
-        popSlimes('slime', 700, 900);
-        popSlimes('sad', 700, 900);
+        popSlimes('slime', 1500, 1800);
+        popSlimes('sad', 1500, 1800);
         angrySlimes(5000);
         getGems(5000);
     }
