@@ -32,10 +32,10 @@ SEI-23 Project 1
 
 ### Additional features
 
-- Wild slime attacks are chance-based (default: 80% success rate); chance of landing a successful hit is lowered (40-60% success rate) if player passes the minimum score check (the value of which increases as the game progresses)
+- Wild slime attacks are chance-based (default: 80% success rate); chances of landing a successful hit are lowered (40-60% success rate) if player passes the minimum score check (the value of which increases as the game progresses)
 - Growling sound effect only plays if wild slime's attack landed successfully
 - Mousedown event listener is only applied to wild slimes if the number of gems collected is >=3. 
-- When this condition is met, 3 gems are deducted with every wild slime that is successfully neutralized
+- When this condition is met, 3 gems are deducted for every wild slime that is successfully neutralized
 - Postive/Negative end messages are displayed depending on player score; score thresholds are lowered for higher difficulty levels 
 - Highest player score is saved to localStorage; highest score for each difficulty level is stored separately 
 - Player is notified if they set a new record for the level
