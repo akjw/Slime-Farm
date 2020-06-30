@@ -185,21 +185,21 @@ h1 {
   background: url('images/Yellow\ Slime\ Short.png');
   width: 96px;
   height: 96px;
-  animation: jump 0.8s steps(17) infinite;
+  animation: jump 0.7s steps(17) infinite;
 }
 
 .cell.sad {
   background: url('images/Sad\ Slime\ Short.png');
   width: 96px;
   height: 96px;
-  animation: jump 0.8s steps(17) infinite;
+  animation: jump 0.7s steps(17) infinite;
 }
 
 .cell.angry {
   background: url('images/Angry\ Slime\ Short.png');
   width: 96px;
   height: 96px;
-  animation: jump 0.8s steps(17) infinite;
+  animation: jump 0.9s steps(17) infinite;
 }
 
 .cell.gem {
