@@ -237,7 +237,7 @@ function checkGems (cell){
 
 //Deduct 3 gems for every hit; add 25 to score
 function hitAngry (){
-    if (this.classList.contains('angry') & gems >= 3){
+    if (this.classList.contains('angry') && gems >= 3){
         gems -= 3;
         gemDisplay.textContent = gems;
         console.log('gems traded for chance to hit angry slime!')
@@ -340,7 +340,7 @@ function endingText (array){
     var endText;
     if (score < array[0]){
         endText = 'Most of your slimes escaped...maybe find a new line of work?';
-    } else if (score >= array[0] & score < array[1]){
+    } else if (score >= array[0] && score < array[1]){
         endText = "You herded most of your slimes back--all in a day's work!";
     } else if (score >= array[1]){
         endText = "No slime is escaping on your watch!";
