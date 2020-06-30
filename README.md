@@ -1,10 +1,10 @@
-# Slime Farm
+# <a href="https://akjw.github.io/Slime-Farm/" target="_blank">Slime Farm</a>
 SEI-23 Project 1
 
 - VanillaJS, HTML, CSS
-- sprites drawn in Piskel
-- theme & sound effects written with Magical 8 Bit Plug
-- background: http://pixelartmaker.com/art/6a68c9aee6a3655
+- Sprites drawn in Piskel
+- Theme & sound effects written with Magical 8 Bit Plug
+- Background image sourced from <a href="http://pixelartmaker.com/art/6a68c9aee6a3655" target="_blank">pxielartmaker</a>
 
 ## MVP 
 
