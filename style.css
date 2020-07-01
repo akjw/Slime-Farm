@@ -30,6 +30,7 @@ body {
   align-items: center;
   color: white;
   flex-direction: column;
+  text-align: center;
 }
 
 .instruction-display p {
@@ -47,10 +48,6 @@ body {
   margin-bottom: 80px;
 }
 
-span {
-  margin-left: 30px;
-}
-
 .level-select {
   margin: 50px;
 }
@@ -64,7 +61,7 @@ li:first-child{
 }
 
 li {
-  margin-right: 65px;
+  margin-right: 80px;
   margin-bottom: 25px;
   text-align: center;
 }
@@ -169,12 +166,12 @@ h1 {
 
 .cell.sm {
   height: 125px;
-  width: 125px;;
+  width: 125px;
 }
 
 .cell.md {
   height: 115px;
-  width: 115px;;
+  width: 115px;
 }
 
 .cell:active {
@@ -221,7 +218,14 @@ h1 {
   }
 }
 
-@media screen and (min-width:320px) and (max-width:420px) {
+/*---Styling for smaller screens---*/
+@media screen and (max-width:320px) {
+  li {
+    margin-right: 70px;
+  }
+}
+
+@media screen and (min-width:320px) and (max-width:415px) {
   .instruction-display p {
     font-size: 9px;
   }
@@ -254,41 +258,41 @@ h1 {
   
   .cell.slime {
     background: url('images/Yellow\ Mobile.png');
-    width: 32px;
-    height: 32px;
+    width: 50px;
+    height: 50px;
     animation: jump 0.7s steps(17) infinite;
   }
   
   .cell.sad {
     background: url('images/Sad\ Mobile.png');
-    width: 32px;
-    height: 32px;
+    width: 50px;
+    height: 50px;
     animation: jump 0.7s steps(17) infinite;
   }
   
   .cell.angry {
     background: url('images/Angry\ Mobile.png');
-    width: 32px;
-    height: 32px;
+    width: 50px;
+    height: 50px;
     animation: jump 0.9s steps(17) infinite;
   }
   
   .cell.gem {
     background: url('images/Gem\ Mobile.png');
-    width: 32px;
-    height: 32px;
+    width: 50px;
+    height: 50px;
     animation: spawn-gem 0.9s steps(19) infinite;
   }
   
   @keyframes jump {
     100% {
-        background-position: -544px, 0;
+        background-position: -850px, 0;
     }
   }
   
   @keyframes spawn-gem {
     100% {
-        background-position: -608px, 0;
+        background-position: -950px, 0;
     }
   }
 }
