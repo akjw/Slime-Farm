@@ -327,15 +327,15 @@ function hitSlimes (){
 
 
 //Generate end text
-function endingText (array){
+function endingText (scoreRange){
     var endText;
-    if (score < array[0]){
+    if (score < scoreRange[0]){
         endText = 'Most of your slimes escaped...maybe find a new line of work?';
-    } else if (score >= array[0] && score < array[1]){
+    } else if (score >= scoreRange[0] && score < scoreRange[1]){
         endText = "You herded most of your slimes back--all in a day's work!";
-    } else if (score >= array[1]){
+    } else if (score >= scoreRange[1]){
         endText = "No slime is escaping on your watch!";
-    } else if (score >= array[1] && angrySlimesHit > array[2]){
+    } else if (score >= scoreRange[1] && angrySlimesHit > scoreRange[2]){
         endText = "You're one tough cookie--those wild slimes ain't seen nothin' yet!";
     }
     return endText;
