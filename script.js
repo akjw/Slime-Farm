@@ -68,7 +68,7 @@ var expertScoreRange = [115, 215, 10]
 function drawBoard (){
     //Verify that radio button is checked
     if(document.querySelector('input[name="difficultyLevel"]:checked') == null) {
-        alert("Please select difficulty level!");
+        alertUser();
     }
     else {
         //Remove start display; show game display
@@ -150,6 +150,13 @@ function showInstructions (){
 function backToMenu (){
     instructionDisplay.classList.remove('show');
     startDisplay.classList.add('show');
+}
+
+function alertUser (){
+    startButton.textContent = 'Please select difficulty!'
+    setTimeout (function(){
+        startButton.textContent = 'Start'
+    }, 800) 
 }
 
 function countDown (){
