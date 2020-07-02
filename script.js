@@ -1,7 +1,7 @@
 /*----------Starting Display----------*/
 
 var startDisplay = document.querySelector('.start-state');
-var instructuons = document.querySelector('#instructions');
+var instructions = document.querySelector('#instructions');
 instructions.addEventListener('click', showInstructions);
 var instructionDisplay = document.querySelector('.instruction-display');
 var backButton = document.querySelector('#back');
@@ -170,7 +170,7 @@ function randomCell (cells) {
     var index = Math.floor(Math.random() * cells.length)
     var cell = cells[index];
     //Check that cell doesn't already contain a sprite
-    if (cell.classList.contains('slime' || 'sad' || 'angry' || 'gem')){
+    if (cell.classList.contains('sprite')){
         randomCell(cells);
     }
     return cell;
@@ -185,11 +185,11 @@ function randomInterval (min, max) {
 function spawnSlimes (type, minInt, maxInt){
     var time = randomInterval(minInt, maxInt);
     var position = randomCell(cells);
-    position.classList.add(type);
+    position.classList.add(type, 'sprite');
     position.addEventListener('mousedown', hitSlimes);
     //remove slime & eventlistener after interval; continue making slimes if time remains
     setTimeout (function(){
-        position.classList.remove(type);
+        position.classList.remove(type, 'sprite');
         position.removeEventListener('mousedown', hitSlimes)
         if (!timesUp){
             spawnSlimes(type,minInt, maxInt);
@@ -201,14 +201,14 @@ function spawnSlimes (type, minInt, maxInt){
 function spawnGems(spawnRate){
     var gemInterval = setInterval (function(){
     var position = randomCell(cells);    
-    position.classList.add('gem');
+    position.classList.add('gem', 'sprite');
     position.addEventListener('mousedown', collectGems);
     if (timeLeft <= 0 || lives <= 0){
         clearInterval(gemInterval);
         endGame(); 
     }
     setTimeout(function(){
-        position.classList.remove('gem');
+        position.classList.remove('gem', 'sprite');
         position.removeEventListener('mousedown', collectGems)
         }, 1000)
     }, spawnRate) 
@@ -222,7 +222,7 @@ function collectGems (){
         currentGems += 1;
         totalGemsCollected += 1;
         gemDisplay.textContent = currentGems;
-        this.classList.remove('gem');
+        this.classList.remove('gem', 'sprite');
         this.removeEventListener('mousedown', collectGems);
     }
 }
@@ -247,7 +247,7 @@ function hitAngrySlime (){
         scoreDisplay.textContent = score;
         angrySlimesHit += 1
         console.log('you hit an angry slime!')
-        this.classList.remove('angry');
+        this.classList.remove('angry', 'sprite');
         this.removeEventListener('mousedown', hitAngrySlime)
     } 
 }
@@ -256,27 +256,23 @@ function hitAngrySlime (){
 function spawnAngrySlimes(spawnRate){
     var angryInterval = setInterval (function(){
     var position = randomCell(cells);
-    position.classList.add('angry');
+    position.classList.add('angry', 'sprite');
     checkGemTotal(position);
-    console.log('added angry slime!');
     if (timeLeft <= 0 || lives <= 0){
         clearInterval(angryInterval);
         endGame(); 
     }
     else if (timeLeft >= 40 && lives > 0){
-        console.log('more than 10s left');
         angrySlimeAttack(100, 0.4);
     } 
     else if (timeLeft >= 20 && lives > 0){
-        console.log('more than 5s left');
         angrySlimeAttack(200, 0.5);
     }
     else if (timeLeft > 0 && lives > 0){
-        console.log('more than 0s left')
         angrySlimeAttack(300, 0.6);
     }
          setTimeout(function(){
-             position.classList.remove('angry');
+             position.classList.remove('angry', 'sprite');
          }, 1000)
      }, spawnRate) 
  }
@@ -286,6 +282,7 @@ function spawnAngrySlimes(spawnRate){
 function angrySlimeAttack (minScore, chance){
     if (score < minScore){
         if(Math.random() < 0.8){
+            //Sound effect only plays if attack was successful
             mauledSound.play();
             mauledSound.currentTime = 0;
             lives -= 1;
@@ -317,7 +314,7 @@ function hitSlimes (){
         boinkedSound.currentTime = 0;
         score += 10;
         scoreDisplay.textContent = score;
-        this.classList.remove('slime');
+        this.classList.remove('slime', 'sprite');
     } else {
         console.log('penalty!');
         bulliedSound.play();
@@ -329,7 +326,7 @@ function hitSlimes (){
             endGame();
         }
         numLives.textContent = lives;
-        this.classList.remove('sad');
+        this.classList.remove('sad', 'sprite');
     }
     this.removeEventListener('mousedown', hitSlimes);
 }
