@@ -287,30 +287,17 @@ function spawnAngrySlimes(spawnRate){
 
 //Calculate chances of angry slime successfully attacking 
 function angrySlimeAttack (minScore, chance){
-    if (score < minScore){
-        if(Math.random() < 0.8){
+    if (score < minScore ? Math.random() < 0.8 : Math.random() < chance){
             //Sound effect only plays if attack was successful
             mauledSound.play();
             mauledSound.currentTime = 0;
             lives -= 1;
             numLives.textContent = lives;
-            console.log('less than minScore; hit!');
-        }
-        else {
-            console.log('less than minScore; attack missed!');
-        }
+            console.log('hit!');
     } 
     else {
-        if(Math.random() < chance){
-            mauledSound.play();
-            mauledSound.currentTime = 0;
-            lives -= 1;
-            numLives.textContent = lives;
-            console.log('more than minScore; hit!');
-        }
-        else{
-            console.log('more than minScore; attack missed!');
-        }
+        console.log('attack missed!');
+        
     }
 }
 
