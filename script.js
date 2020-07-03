@@ -367,7 +367,7 @@ function endGame (){
         recordScores(exStorageName);
     }
     gameDisplay.classList.remove('show');
-    endDisplay.classList.add('show');
+    endDisplay.style.display = 'flex';
     endMessage.innerHTML = `${endingMsg} <br><br><br> Score: ${score} <br><br> Gems collected: ${totalGemsCollected} <br><br> Wild slimes boinked: ${angrySlimesHit}`;
 }
 
@@ -384,7 +384,7 @@ function restartGame (){
     gemDisplay.textContent = currentGems;
     angrySlimesHit = 0;
     timeLeft = 60;
-    endDisplay.classList.remove('show');
+    endDisplay.style.display = 'none';
     startDisplay.classList.add('show');
 }
 
